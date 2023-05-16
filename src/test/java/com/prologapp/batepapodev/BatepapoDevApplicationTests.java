@@ -57,4 +57,14 @@ class BatepapoDevApplicationTests {
 			System.out.println(user.getName());
 		});
 	}
+
+	@Test
+	void specificationByIdTest(){
+		final Specification<User> userSpecification = UserSpecs.filterById(1L);
+		final List<User> users = userDao.findAll(userSpecification);
+
+		users.forEach(user -> {
+			System.out.println(user.getTeam().getName());
+		});
+	}
 }

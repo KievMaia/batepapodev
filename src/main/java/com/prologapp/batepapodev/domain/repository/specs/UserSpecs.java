@@ -28,4 +28,15 @@ public class UserSpecs {
     public static Specification<User> filterByStatus(boolean status) {
         return (root, query, builder) -> builder.equal(root.get("status"), status);
     }
+
+    public static Specification<User> filterById(Long id){
+        return((root, query, builder) -> {
+
+            if (User.class.equals(query.getResultType())){
+                root.fetch("team");
+            }
+
+           return builder.equal(root.get("id"), id);
+        });
+    }
 }
