@@ -36,4 +36,7 @@ public class User {
 
     @Column(nullable = false)
     private OffsetDateTime dataCadastro;
+
+    @Column(nullable = false)
+    private Boolean status;
 }
