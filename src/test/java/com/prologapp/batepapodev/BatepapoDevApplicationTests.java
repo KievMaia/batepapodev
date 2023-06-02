@@ -30,14 +30,16 @@ class BatepapoDevApplicationTests {
 	@Test
 	void criteriaJpqlTest() {
 
-		final var builder = manager.getCriteriaBuilder();
-		final var query = builder.createQuery(User.class);
-		final var root = query.from(User.class);
+//		final var builder = manager.getCriteriaBuilder();
+//		final var query = builder.createQuery(User.class);
+//		final var root = query.from(User.class);
 
-		String jpql = "from User u where u.id = 1";
 //		query.where(builder.equal(root.get("id"), 1));
 
 //		final TypedQuery<User> typedQuery = manager.createQuery(query);
+
+		String jpql = "from User u where u.id = 1";
+
 		final TypedQuery<User> typedQuery = manager.createQuery(jpql, User.class);
 
 		Assertions.assertEquals("João Silva", typedQuery.getSingleResult().getName());
@@ -47,16 +49,14 @@ class BatepapoDevApplicationTests {
 	void specificationTest() {
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 		OffsetDateTime startDate = OffsetDateTime.parse("2023-03-18T00:00:00Z", formatter);
-		OffsetDateTime endDate = OffsetDateTime.parse("2023-04-08T23:59:59Z", formatter);
+		OffsetDateTime endDate = OffsetDateTime.parse("2023-05-15T23:59:59Z", formatter);
 
 		final Specification<User> userSpecification =
 				UserSpecs.filterByDate(startDate, endDate);
 
 		final List<User> users = userDao.findAll(userSpecification);
 
-		users.forEach(user -> {
-			System.out.println(user.getName());
-		});
+		Assertions.assertEquals(users.size(), 8);
 	}
 
 	@Test
@@ -64,8 +64,6 @@ class BatepapoDevApplicationTests {
 		final Specification<User> userSpecification = UserSpecs.filterById(1L);
 		final List<User> users = userDao.findAll(userSpecification);
 
-		users.forEach(user -> {
-			System.out.println(user.getTeam().getName());
-		});
+		Assertions.assertEquals("Produto", users.get(0).getTeam().getName());
 	}
 }
