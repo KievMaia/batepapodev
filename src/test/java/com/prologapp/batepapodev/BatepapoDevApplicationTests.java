@@ -6,6 +6,7 @@ import com.prologapp.batepapodev.domain.repository.specs.UserSpecs;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +34,20 @@ class BatepapoDevApplicationTests {
 		final var query = builder.createQuery(User.class);
 		final var root = query.from(User.class);
 
-//		String jpql = "from User u where u.id = 1";
-		query.where(builder.equal(root.get("id"), 1));
+		String jpql = "from User u where u.id = 1";
+//		query.where(builder.equal(root.get("id"), 1));
 
-		final TypedQuery<User> typedQuery = manager.createQuery(query);
-//		final TypedQuery<User> typedQuery = manager.createQuery(jpql, User.class);
+//		final TypedQuery<User> typedQuery = manager.createQuery(query);
+		final TypedQuery<User> typedQuery = manager.createQuery(jpql, User.class);
 
-		System.out.println(typedQuery.getSingleResult().getName());
+		Assertions.assertEquals("João Silva", typedQuery.getSingleResult().getName());
 	}
 
 	@Test
 	void specificationTest() {
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 		OffsetDateTime startDate = OffsetDateTime.parse("2023-03-18T00:00:00Z", formatter);
-		OffsetDateTime endDate = OffsetDateTime.parse("2023-04-08T00:00:00Z", formatter);
+		OffsetDateTime endDate = OffsetDateTime.parse("2023-04-08T23:59:59Z", formatter);
 
 		final Specification<User> userSpecification =
 				UserSpecs.filterByDate(startDate, endDate);
