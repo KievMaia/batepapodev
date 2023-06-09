@@ -6,7 +6,6 @@ import com.prologapp.batepapodev.domain.repository.specs.UserSpecs;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.data.jpa.domain.Specification;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 class BatepapoDevApplicationTests {
@@ -52,7 +50,7 @@ class BatepapoDevApplicationTests {
 		OffsetDateTime endDate = OffsetDateTime.parse("2023-05-15T23:59:59Z", formatter);
 
 		final Specification<User> userSpecification =
-				UserSpecs.filterByDate(startDate, endDate);
+				UserSpecs.filterByParameters(startDate, endDate);
 
 		final List<User> users = userDao.findAll(userSpecification);
 

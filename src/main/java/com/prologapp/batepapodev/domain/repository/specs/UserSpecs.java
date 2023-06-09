@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class UserSpecs {
 
-    public static Specification<User> filterByDate(OffsetDateTime startDate, OffsetDateTime endDate){
+    public static Specification<User> filterByParameters(OffsetDateTime startDate, OffsetDateTime endDate){
         return(root, query, builder) -> {
             final var predicates = new ArrayList<>();
 
